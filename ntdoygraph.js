@@ -39,7 +39,7 @@ var makeGraph = function(data)
   			and the data, so that the bars start from the bottom and not
   			from the top. (as SVG starts from the top)*/
   			.attr("y", function(d){
-  									return h - (d.Open * 4)-padding;
+  									return h - (d.Open * 4);
   								})
   			/*The width is set to adjust depending on how many data values
   			there are.*/
@@ -47,12 +47,12 @@ var makeGraph = function(data)
   			/*Multiply the value by 4 (also in the y attribute) so the bars
   			look bigger, but don´t lose proportion.*/
   			.attr("height",function(d){
-  											return d.Open * 4;
+  											return d.Open*4;
   										})
   			/*The fill attribute assigns a shade of blue according to the
   			data value. The taller the bar, the lighter blue is.*/
   			.attr("fill", function(d){
-  				return "rgb(0,0," + (d.Open * 10) + ")";
+  				return "rgb(0,0," + (d.Open*100) + ")";
   			});
    /****Axes Declaration****/
    var xAxis = d3.axisBottom()
@@ -67,12 +67,34 @@ var makeGraph = function(data)
 										 .scale(yScale)
 										 /*Indicates the number of ticks*/
 										 .ticks(5);
-   svg.append("g")
+  /*****Text*****/
+  var f = d3.format(".2")
+  svg.selectAll("text")
+      .data(data)
+      .enter()
+      .append("text")
+      //One label per Datum
+      .text(function(d){
+              return f(d.Open);
+      })
+      /*the x coordinate sets the label exactly in the middle of
+      bar.*/
+      .attr("x", function(d, i) {
+       return (i * (w / data.length) + (w / data.length - barPadding) / 2)+padding;
+                  })
+      .attr("y", function(d) {
+                 return h - (d.Open * 4) + 14;
+                })
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "11px")
+      .attr("fill","white")
+      .attr("text-anchor","middle");
+   /*svg.append("g")
 			.attr("class","axis")
 			.attr("transform", "translate(0," + (h - padding) + ")")
 				.call(xAxis);
   svg.append("g")
 		    .attr("class", "axis")
 		    .attr("transform", "translate(" + padding + ",0)")
-		    .call(yAxis);
+		    .call(yAxis);*/
 }
