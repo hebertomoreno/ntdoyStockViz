@@ -30,6 +30,9 @@ var makeGraph = function(data)
   var yScale = d3.scaleLinear()
                  .domain(yDom)
                  .range([h-padding,0]);
+  var cScale = d3.scaleLinear()
+                  .domain(yDom)
+                  .range([0,255]);
   /****Draw Rectangles****/
    svg.selectAll("rect")
   			.data(data)
@@ -63,7 +66,7 @@ var makeGraph = function(data)
           255 to get a uniform color scheme. ***/
           var colorFi = f((d.Open/yMax)*255);
           //console.log("Color Value: ", colorFi);
-          //console.log("rgb(0,0," + colorFi+")");
+          console.log("rgb(0,0," + colorFi+")");
   				return "rgb(0,0," + colorFi + ")";
   			});
    /****Axes Declaration****/
