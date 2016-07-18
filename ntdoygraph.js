@@ -24,9 +24,9 @@ var makeGraph = function(data)
   console.log("Y Domain: ",yDom);
   console.log("Y Max: ",yMax);
 
-  var xScale = d3.scaleBand()
+  var xScale = d3.scaleOrdinal()
                  .domain(d3.range(data.length))
-                 .range([padding, w]);
+                 .range([padding, w-padding]);
   var yScale = d3.scaleLinear()
                  .domain(yDom)
                  .range([h-padding,0]);
@@ -38,7 +38,7 @@ var makeGraph = function(data)
   			.attr("x", function(d,i){
   									/*This line makes bars evenly spaced,
   									according to the data values*/
-  									return i * (w / data.length) + padding
+  									return i * (w / data.length) +padding
   								})
   			/*We set y to the difference between the height of the chart
   			and the data, so that the bars start from the bottom and not
@@ -58,9 +58,12 @@ var makeGraph = function(data)
   			data value. The taller the bar, the lighter blue is.*/
   			.attr("fill", function(d){
           var f = d3.format(".3");
+          /***Color Fi is a variable that takes the value of d.Open, divides
+          it over the maximum value in the graph, and then multiplies it by
+          255 to get a uniform color scheme. ***/
           var colorFi = f((d.Open/yMax)*255);
-          console.log("Color Value: ", colorFi);
-          console.log("rgb(0,0," + colorFi+")");
+          //console.log("Color Value: ", colorFi);
+          //console.log("rgb(0,0," + colorFi+")");
   				return "rgb(0,0," + colorFi + ")";
   			});
    /****Axes Declaration****/
@@ -77,7 +80,7 @@ var makeGraph = function(data)
 										 /*Indicates the number of ticks*/
 										 .ticks(5);
   /*****Text*****/
-  var f = d3.format(".2")
+  /*var f = d3.format(".2")
   svg.selectAll("text")
       .data(data)
       .enter()
@@ -87,7 +90,7 @@ var makeGraph = function(data)
               return f(d.Open);
       })
       /*the x coordinate sets the label exactly in the middle of
-      bar.*/
+      bar.
       .attr("x", function(d, i) {
        return (i * (w / data.length) + (w / data.length - barPadding) / 2)+padding;
                   })
@@ -97,7 +100,7 @@ var makeGraph = function(data)
       .attr("font-family", "sans-serif")
       .attr("font-size", "11px")
       .attr("fill","white")
-      .attr("text-anchor","middle");
+      .attr("text-anchor","middle");*/
    svg.append("g")
 			.attr("class","axis")
 			.attr("transform", "translate(0," + (h - padding) + ")")

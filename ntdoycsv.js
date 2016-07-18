@@ -8,7 +8,7 @@ var ntdoycsv = function()
     data = dataset.map(function(d)
     {
       var parDate = parser(d.Date);
-      var f = d3.format(".2")
+      var f = d3.format(".2");
       //console.log("Date: ", parDate);
       d.Open = +f(+d.Open);
       d.High = +d.High;
