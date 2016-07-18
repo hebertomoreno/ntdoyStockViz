@@ -16,8 +16,13 @@ var makeGraph = function(data)
             {
               return d.Open;
             })
+  var yMax = d3.max(data,function(d)
+            {
+              return d.Open;
+            })
 
-  console.log(yDom);
+  console.log("Y Domain: ",yDom);
+  console.log("Y Max: ",yMax);
 
   var xScale = d3.scaleBand()
                  .domain(d3.range(data.length))
@@ -52,7 +57,11 @@ var makeGraph = function(data)
   			/*The fill attribute assigns a shade of blue according to the
   			data value. The taller the bar, the lighter blue is.*/
   			.attr("fill", function(d){
-  				return "rgb(0,0," + (d.Open*8) + ")";
+          var f = d3.format(".3");
+          var colorFi = f((d.Open/yMax)*255);
+          console.log("Color Value: ", colorFi);
+          console.log("rgb(0,0," + colorFi+")");
+  				return "rgb(0,0," + colorFi + ")";
   			});
    /****Axes Declaration****/
    var xAxis = d3.axisBottom()
