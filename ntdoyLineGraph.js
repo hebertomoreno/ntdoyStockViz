@@ -1,7 +1,7 @@
 //Width, Height and padding
 var w = 500;
 var h = 500;
-var padding = 30;
+var padding = 50;
 
 var makeLineGraph = function(data)
 {
@@ -18,7 +18,7 @@ var makeLineGraph = function(data)
               return d.Open;
             })
   /***Scales***/
-  var xScale = d3.scaleBand()
+  var xScale = d3.scaleTime()
                   .domain([minDate, maxDate])
                   .range([padding, w-padding]);
   var yScale = d3.scaleLinear()
@@ -38,11 +38,15 @@ var makeLineGraph = function(data)
                     .ticks(5);
   /***Draw Axes***/
   svg.append("g")
-     .attr("class","axis")
+     .attr("class","xaxis")
      .attr("transform", "translate(0," + (h - padding) + ")")
        .call(xAxis);
  svg.append("g")
-       .attr("class", "axis")
+       .attr("class", "yaxis")
        .attr("transform", "translate(" + padding + ",0)")
        .call(yAxis);
+ svg.selectAll(".xaxis text")  // select all the text elements for the xaxis
+         .attr("transform", function(d) {
+             return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+       });
 }
