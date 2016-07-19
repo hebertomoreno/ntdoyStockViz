@@ -26,7 +26,7 @@ var ntdoycsv = function()
              "AdjClose": d["Adj Close"]};
     })
     console.log("Stock Data: ", data);
-    makeGraph(data);
+    makeLineGraph(data);
   })
 
 }

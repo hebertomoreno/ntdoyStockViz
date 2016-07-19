@@ -5,7 +5,7 @@ var padding = 30;
 var barPadding = 2;
 var increment = 8;
 
-var makeGraph = function(data)
+var makeBarGraph = function(data)
 {
   /****SVG Delcaration****/
   var svg = d3.select("body")
@@ -113,4 +113,5 @@ var makeGraph = function(data)
 		    .attr("class", "axis")
 		    .attr("transform", "translate(" + padding + ",0)")
 		    .call(yAxis);
+  
 }
