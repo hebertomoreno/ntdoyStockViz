@@ -1,7 +1,7 @@
 //Width, Height and padding
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
+var margin = {top: 20, right: 20, bottom: 100, left: 50},
     w = 960 - margin.left - margin.right,
-    h = 500 - margin.top - margin.bottom;
+    h = 700 - margin.top - margin.bottom;
 /*var w = 500;
 var h = 500;*/
 var padding = 50;
