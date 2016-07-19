@@ -1,10 +1,11 @@
 //Width, Height and padding
 var margin = {top: 20, right: 20, bottom: 100, left: 50},
-    w = 960 - margin.left - margin.right,
+    w = 1600 - margin.left - margin.right,
     h = 700 - margin.top - margin.bottom;
 /*var w = 500;
 var h = 500;*/
 var padding = 50;
+var barPadding = 0;
 
 var makeLineGraph = function(data)
 {
@@ -25,6 +26,11 @@ var makeLineGraph = function(data)
             {
               return d.Open;
             })
+  var vDom = d3.extent(data, function(d)
+            {
+              return d.Volume;
+            })
+  console.log("Vol Domain: ", vDom);
   //console.log("X Domain", xDom);
   //console.log("Y Domain", yDom);
   /***Scales***/
@@ -33,6 +39,9 @@ var makeLineGraph = function(data)
                   .range([0, w]);
   var yScale = d3.scaleLinear()
                   .domain(yDom)
+                  .range([h,0]);
+  var vScale = d3.scaleLinear()
+                  .domain(vDom)
                   .range([h,0]);
   /****Axes Declaration****/
   var xAxis = d3.axisBottom()
@@ -71,6 +80,27 @@ var makeLineGraph = function(data)
                   //console.log("Value scaled in y: ",yScale(d.Open));
                   return yScale(d.Low);
                 });
+  /***Draw Volume Squares***/
+  svg.selectAll("rect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", function(d,i)
+                {
+                  var rectPos = w/data.length;
+                  return i*rectPos;
+                })
+      .attr("y", function(d,i)
+                  {
+                    return h-vScale(d.Volume);
+                  })
+      .attr("width", function(d){
+                    return (w/data.length)-barPadding;
+                    })
+      .attr("height",function(d){
+                      return vScale(d.Volume);
+                    })
+      .attr("fill", "rgba(0,255,0,0.3)");
   /***Draw Axes***/
   svg.append("g")
      .attr("class","xaxis")
@@ -95,11 +125,12 @@ var makeLineGraph = function(data)
       .datum(data)
       .attr("class", "openLine")
       .attr("d", openLine);
-  /***Draw Open Line***/
+  /***Draw Low Line***/
   svg.append("path")
       .datum(data)
       .attr("class", "lowLine")
       .attr("d", lowLine);
+
 }
 
 function getMinDate(data){
