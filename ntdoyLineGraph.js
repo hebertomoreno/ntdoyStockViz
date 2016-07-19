@@ -47,8 +47,8 @@ var makeLineGraph = function(data)
                     .scale(yScale)
                     /*Indicates the number of ticks*/
                     .ticks(5);
-  /***Line Declaration***/
-  var line = d3.line()
+  /***Open Line Declaration***/
+  var openLine = d3.line()
                 .x(function(d) {
                   //console.log("X being drawn in ", d.Time);
                   //console.log("Value scaled in x: ",xScale(d.Time));
@@ -58,6 +58,18 @@ var makeLineGraph = function(data)
                   //console.log("Y being drawn in ", d.Open);
                   //console.log("Value scaled in y: ",yScale(d.Open));
                   return yScale(d.Open);
+                });
+  /***Low Line Declaration***/
+  var lowLine = d3.line()
+                .x(function(d) {
+                  //console.log("X being drawn in ", d.Time);
+                  //console.log("Value scaled in x: ",xScale(d.Time));
+                  return xScale(d.Time);
+                })
+                .y(function(d) {
+                  //console.log("Y being drawn in ", d.Open);
+                  //console.log("Value scaled in y: ",yScale(d.Open));
+                  return yScale(d.Low);
                 });
   /***Draw Axes***/
   svg.append("g")
@@ -77,11 +89,17 @@ var makeLineGraph = function(data)
          .attr("transform", function(d) {
              return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
        });
-  /***Draw Line***/
+
+  /***Draw Open Line***/
   svg.append("path")
       .datum(data)
-      .attr("class", "line")
-      .attr("d", line);
+      .attr("class", "openLine")
+      .attr("d", openLine);
+  /***Draw Open Line***/
+  svg.append("path")
+      .datum(data)
+      .attr("class", "lowLine")
+      .attr("d", lowLine);
 }
 
 function getMinDate(data){

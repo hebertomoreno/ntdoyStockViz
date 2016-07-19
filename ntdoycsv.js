@@ -12,7 +12,7 @@ var ntdoycsv = function()
       //console.log("Date: ", parDate);
       d.Open = +f(+d.Open);
       d.High = +d.High;
-      d.Low = +d.Low;
+      d.Low = +f(+d.Low);
       d.Close = +d.Close;
       d.Volume = +d.Volume;
       d["Adj Close"] = +d["Adj Close"];
