@@ -2,12 +2,11 @@
 var margin = {top: 20, right: 20, bottom: 100, left: 50},
     w = 1000 - margin.left - margin.right,
     h = 700 - margin.top - margin.bottom;
-/*var w = 500;
-var h = 500;*/
+
 var padding = 50;
 var barPadding = 1;
 
-var makeLineGraph = function(data)
+var makePointGraph = function(data)
 {
   /***Draw SVG***/
   var svg = d3.select("body")
@@ -83,16 +82,9 @@ var makeLineGraph = function(data)
     var t = svg.transition().duration(750);
     svg.select(".xaxis").transition(t).call(xAxis);
     svg.select(".yaxis").transition(t).call(yAxis);
-    var newLine = d3.line()
-                    .curve(d3.curveLinear)
-                  .x(function(d) {
-                    return xScale(d.Time);
-                  })
-                  .y(function(d) {
-                    return yScale(d.Close);
-                  });
-    svg.selectAll("path").transition(t)
-        .attr("d", newLine);
+    svg.selectAll("circle").transition(t)
+      .attr("cx", function(d) { return xScale(d.Time); })
+      .attr("cy", function(d) { return yScale(d.Open); });
   }
   /***Idle function***/
   function idled()
@@ -100,57 +92,15 @@ var makeLineGraph = function(data)
     idleTimeout = null;
   }
 
-  /***Open Line Declaration***/
-  var openLine = d3.line()
-                  .curve(d3.curveLinear)
-                .x(function(d) {
-                  //console.log("X being drawn in ", d.Time);
-                  //console.log("Value scaled in x: ",xScale(d.Time));
-                  return xScale(d.Time);
-                })
-                .y(function(d) {
-                  //console.log("Y being drawn in ", d.Open);
-                  //console.log("Value scaled in y: ",yScale(d.Open));
-                  return yScale(d.Close);
-                });
-  /***Low Line Declaration***/
-  var lowLine = d3.line()
-                .x(function(d) {
-                  //console.log("X being drawn in ", d.Time);
-                  //console.log("Value scaled in x: ",xScale(d.Time));
-                  return xScale(d.Time);
-                })
-                .y(function(d) {
-                  //console.log("Y being drawn in ", d.Open);
-                  //console.log("Value scaled in y: ",yScale(d.Open));
-                  return yScale(d.High);
-                });
-  /***Draw Volume Squares***/
-  /*svg.selectAll("rect")
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("x", function(d,i)
-                {
-                  var rectPos = w/data.length;
-                  return i*rectPos;
-                })
-      .attr("y", function(d,i)
-                  {
-                    return h-vScale(d.Volume);
-                  })
-      .attr("width", function(d){
-                    return (w/data.length)-barPadding;
-                    })
-      .attr("height",function(d){
-                      return vScale(d.Volume);
-                    })
-      .attr("fill", function(d)
-                    {
-                      //console.log("rgb(0,255,0," + cScale(d.Volume) +")");
-                      return "rgba(0,255,0," + cScale(d.Volume) + ")";
-                      //return cScale(d.Volume);
-                    });*/
+  /***Draw circles***/
+  svg.selectAll("circle")
+    .data(data)
+    .enter().append("circle")
+      .attr("cx", function(d) { return xScale(d.Time); })
+      .attr("cy", function(d) { return yScale(d.Open); })
+      .attr("r", 2.5)
+      .attr("fill", "blue");
+
   /***Draw Axes***/
   svg.append("g")
      .attr("class","xaxis")
@@ -175,17 +125,4 @@ var makeLineGraph = function(data)
   svg.append("g")
     .attr("class", "brush")
     .call(brush);
-  /***Draw Open Line***/
-  svg.append("path")
-      .datum(data)
-      .attr("class", "openLine")
-      .attr("d", openLine);
-  /***Draw Low Line***/
-  /*svg.append("path")
-      .datum(data)
-      .attr("class", "lowLine")
-      .attr("d", lowLine);*/
-  /***Zoom Function***/
-
-
 }
