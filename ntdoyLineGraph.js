@@ -69,20 +69,21 @@ var makeLineGraph = function(data)
     var s = d3.event.selection;
     if (!s) {
       if (!idleTimeout) return idleTimeout = setTimeout(idled, idleDelay);
-      x.domain(x0);
-      y.domain(y0);
+      xScale.domain(xDom);
+      yScale.domain(yDom);
     } else {
-      x.domain([s[0][0], s[1][0]].map(x.invert, x));
-      y.domain([s[1][1], s[0][1]].map(y.invert, y));
+      xScale.domain([s[0][0], s[1][0]].map(xScale.invert, xScale));
+      yScale.domain([s[1][1], s[0][1]].map(yScale.invert, yScale));
       svg.select(".brush").call(brush.move, null);
     }
-    //zoom();
+    zoom();
   }
   /***Idle function***/
   function idled()
   {
     idleTimeout = null;
   }
+
   /***Open Line Declaration***/
   var openLine = d3.line()
                 .x(function(d) {
@@ -108,7 +109,7 @@ var makeLineGraph = function(data)
                   return yScale(d.High);
                 });
   /***Draw Volume Squares***/
-  svg.selectAll("rect")
+  /*svg.selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
@@ -132,7 +133,7 @@ var makeLineGraph = function(data)
                       //console.log("rgb(0,255,0," + cScale(d.Volume) +")");
                       return "rgba(0,255,0," + cScale(d.Volume) + ")";
                       //return cScale(d.Volume);
-                    });
+                    });*/
   /***Draw Axes***/
   svg.append("g")
      .attr("class","xaxis")
@@ -161,10 +162,19 @@ var makeLineGraph = function(data)
       .attr("class", "openLine")
       .attr("d", openLine);
   /***Draw Low Line***/
-  svg.append("path")
+  /*svg.append("path")
       .datum(data)
       .attr("class", "lowLine")
-      .attr("d", lowLine);
+      .attr("d", lowLine);*/
+  /***Zoom Function***/
+  function zoom()
+  {
+    var t = svg.transition().duration(750);
+    svg.select(".xaxis").transition(t).call(xAxis);
+    svg.select(".yaxis").transition(t).call(yAxis);
+    svg.selectAll("path").transition(t)
+        .attr("d", openLine);
+  }
 
 }
 
