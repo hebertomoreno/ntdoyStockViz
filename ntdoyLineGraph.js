@@ -59,6 +59,30 @@ var makeLineGraph = function(data)
                     .scale(yScale)
                     /*Indicates the number of ticks*/
                     .ticks(5);
+  /***Brush Declaration***/
+  var brush = d3.brush().on("end", brushended),
+    idleTimeout,
+    idleDelay = 350;
+  /***Brushended function***/
+  function brushended()
+  {
+    var s = d3.event.selection;
+    if (!s) {
+      if (!idleTimeout) return idleTimeout = setTimeout(idled, idleDelay);
+      x.domain(x0);
+      y.domain(y0);
+    } else {
+      x.domain([s[0][0], s[1][0]].map(x.invert, x));
+      y.domain([s[1][1], s[0][1]].map(y.invert, y));
+      svg.select(".brush").call(brush.move, null);
+    }
+    //zoom();
+  }
+  /***Idle function***/
+  function idled()
+  {
+    idleTimeout = null;
+  }
   /***Open Line Declaration***/
   var openLine = d3.line()
                 .x(function(d) {
@@ -105,7 +129,7 @@ var makeLineGraph = function(data)
                     })
       .attr("fill", function(d)
                     {
-                      console.log("rgb(0,255,0," + cScale(d.Volume) +")");
+                      //console.log("rgb(0,255,0," + cScale(d.Volume) +")");
                       return "rgba(0,255,0," + cScale(d.Volume) + ")";
                       //return cScale(d.Volume);
                     });
@@ -127,7 +151,10 @@ var makeLineGraph = function(data)
          .attr("transform", function(d) {
              return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
        });
-
+  /***Draw Brush***/
+  svg.append("g")
+    .attr("class", "brush")
+    .call(brush);
   /***Draw Open Line***/
   svg.append("path")
       .datum(data)
