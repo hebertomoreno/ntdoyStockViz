@@ -92,14 +92,23 @@ var makePointGraph = function(data)
     idleTimeout = null;
   }
 
+  var pointsx = function(d)
+  {
+    return xScale(d.Time);
+  }
+  var pointsy = function(d)
+  {
+    return yScale(d.Open);
+  }
+
   /***Draw circles***/
   svg.selectAll("circle")
     .data(data)
     .enter().append("circle")
-      .attr("cx", function(d) { return xScale(d.Time); })
-      .attr("cy", function(d) { return yScale(d.Open); })
+      .attr("cx", pointsx )
+      .attr("cy", pointsy)
       .attr("r", 2.5)
-      .attr("fill", "blue");
+      .attr("fill", "steelblue");
 
   /***Draw Axes***/
   svg.append("g")
