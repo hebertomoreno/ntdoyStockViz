@@ -60,11 +60,11 @@ var makeBarGraph = function(data)
   										})
   			/*The fill attribute assigns a shade of blue according to the
   			data value. The taller the bar, the lighter blue is.*/
+        /***Color Fi is a variable that takes the value of d.Open, divides
+        it over the maximum value in the graph, and then multiplies it by
+        255 to get a uniform color scheme. ***/
   			.attr("fill", function(d){
           var f = d3.format(".3");
-          /***Color Fi is a variable that takes the value of d.Open, divides
-          it over the maximum value in the graph, and then multiplies it by
-          255 to get a uniform color scheme. ***/
           var colorFi = f((d.Open/yMax)*255);
           //console.log("Color Value: ", colorFi);
           console.log("rgb(0,0," + colorFi+")");
@@ -113,5 +113,5 @@ var makeBarGraph = function(data)
 		    .attr("class", "axis")
 		    .attr("transform", "translate(" + padding + ",0)")
 		    .call(yAxis);
-  
+
 }
