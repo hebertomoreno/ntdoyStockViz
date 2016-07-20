@@ -3,7 +3,7 @@ var ntdoycsv = function()
 {
   var parser = d3.timeParse("%Y-%m-%d");
   var tFormat = d3.timeFormat("%d/%m/%y");
-  d3.csv("table.csv", function(dataset)
+  d3.csv("table2.csv", function(dataset)
   {
     data = dataset.map(function(d)
     {
@@ -12,7 +12,7 @@ var ntdoycsv = function()
       //console.log("Date: ", parDate);
       d.Open = +f(+d.Open);
       d.High = +d.High;
-      d.Low = +d.Low;
+      d.Low = +f(+d.Low);
       d.Close = +d.Close;
       d.Volume = +d.Volume;
       d["Adj Close"] = +d["Adj Close"];
