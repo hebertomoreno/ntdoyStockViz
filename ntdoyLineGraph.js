@@ -86,6 +86,7 @@ var makeLineGraph = function(data)
 
   /***Open Line Declaration***/
   var openLine = d3.line()
+                  .curve(d3.curveLinear)
                 .x(function(d) {
                   //console.log("X being drawn in ", d.Time);
                   //console.log("Value scaled in x: ",xScale(d.Time));
