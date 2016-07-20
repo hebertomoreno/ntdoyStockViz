@@ -83,21 +83,22 @@ var makePointGraph = function(data)
     svg.select(".xaxis").transition(t).call(xAxis);
     svg.select(".yaxis").transition(t).call(yAxis);
     svg.selectAll("circle").transition(t)
-      .attr("cx", function(d) { return xScale(d.Time); })
-      .attr("cy", function(d) { return yScale(d.Open); });
+      .attr("cx", pointsx)
+      .attr("cy", pointsy);
   }
   /***Idle function***/
   function idled()
   {
     idleTimeout = null;
   }
-
+  var pointsx = function(d) { return xScale(d.Time); }
+  var pointsy = function(d) { return yScale(d.Open); }
   /***Draw circles***/
   svg.selectAll("circle")
     .data(data)
     .enter().append("circle")
-      .attr("cx", function(d) { return xScale(d.Time); })
-      .attr("cy", function(d) { return yScale(d.Open); })
+      .attr("cx", pointsx)
+      .attr("cy", pointsy)
       .attr("r", 2.5)
       .attr("fill", "blue");
 
