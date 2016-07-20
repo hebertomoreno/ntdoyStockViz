@@ -1,5 +1,5 @@
 //Width, Height and padding
-var margin = {top: 20, right: 20, bottom: 100, left: 50},
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
     w = 1000 - margin.left - margin.right,
     h = 700 - margin.top - margin.bottom;
 
@@ -83,8 +83,15 @@ var makePointGraph = function(data)
     svg.select(".xaxis").transition(t).call(xAxis);
     svg.select(".yaxis").transition(t).call(yAxis);
     svg.selectAll("circle").transition(t)
+      .attr("class", "circles")
       .attr("cx", pointsx)
       .attr("cy", pointsy);
+      svg.selectAll("path")
+          .attr("display", "none");
+      svg.append("path")
+        .datum(data)
+        .attr("class", "openLine")
+        .attr("d",lineBetween);
   }
   /***Idle function***/
   function idled()
@@ -97,11 +104,28 @@ var makePointGraph = function(data)
   svg.selectAll("circle")
     .data(data)
     .enter().append("circle")
+      .attr("class","circles")
       .attr("cx", pointsx)
       .attr("cy", pointsy)
       .attr("r", 2.5)
       .attr("fill", "blue");
-
+  /***Draw Lines between circles***/
+  var lineBetween = d3.line()
+                      .curve(d3.curveLinear)
+                      .x(function(d) {
+                        //console.log("X being drawn in ", d.Time);
+                        //console.log("Value scaled in x: ",xScale(d.Time));
+                        return xScale(d.Time);
+                      })
+                      .y(function(d) {
+                        //console.log("Y being drawn in ", d.Open);
+                        //console.log("Value scaled in y: ",yScale(d.Open));
+                        return yScale(d.Close);
+                      });
+  svg.append("path")
+    .datum(data)
+    .attr("class", "openLine")
+    .attr("d",lineBetween);
   /***Draw Axes***/
   svg.append("g")
      .attr("class","xaxis")
