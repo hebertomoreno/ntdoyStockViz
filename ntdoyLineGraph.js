@@ -1,11 +1,11 @@
 //Width, Height and padding
 var margin = {top: 20, right: 20, bottom: 100, left: 50},
-    w = 1000 - margin.left - margin.right,
-    h = 700 - margin.top - margin.bottom;
+    w = 900 - margin.left - margin.right,
+    h = 400 - margin.top - margin.bottom;
 /*var w = 500;
 var h = 500;*/
 var padding = 50;
-var barPadding = 1;
+var barPadding = 0.15;
 
 var makeLineGraph = function(data)
 {
