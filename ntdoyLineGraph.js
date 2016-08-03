@@ -121,8 +121,8 @@ var makeLineGraph = function(data)
                   return xScale(d.Time);
                 })
                 .y(function(d) {
-                  //console.log("Y being drawn in ", d.Open);
-                  //console.log("Value scaled in y: ",yScale(d.Open));
+                  //console.log("X being drawn in ", d.Time);
+                  //console.log("Value scaled in x: ",xScale(d.Time));
                   return yScale(d.High);
                 });
   /***Draw Volume Squares***/
@@ -186,6 +186,4 @@ var makeLineGraph = function(data)
       .attr("class", "lowLine")
       .attr("d", lowLine);*/
   /***Zoom Function***/
-
-
 }
