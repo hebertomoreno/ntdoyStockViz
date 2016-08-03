@@ -1,5 +1,5 @@
 //Width, Height and padding
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
+var margin = {top: 20, right: 20, bottom: 70, left: 50},
     w = 1000 - margin.left - margin.right,
     h = 700 - margin.top - margin.bottom;
 
@@ -16,8 +16,6 @@ var makePointGraph = function(data)
               .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   /***Useful Domain Variables***/
-  //var minDate = getMinDate(data);
-
   var xDom = d3.extent(data, function(d){
               return d.Time;
             })
@@ -29,9 +27,6 @@ var makePointGraph = function(data)
             {
               return d.Volume;
             })
-  //console.log("Vol Domain: ", vDom);
-  //console.log("X Domain", xDom);
-  //console.log("Y Domain", yDom);
   /***Scales***/
   var xScale = d3.scaleTime()
                   .domain(xDom)
@@ -47,16 +42,10 @@ var makePointGraph = function(data)
                   .range([1,0]);
   /****Axes Declaration****/
   var xAxis = d3.axisBottom()
-                     /*Each axis also needs to be told on what scale to
-                       operate*/
                      .scale(xScale)
-                     /*Indicates the number of ticks*/
                      .ticks(16);
   var yAxis = d3.axisLeft()
-                    /*Each axis also needs to be told on what scale to
-                      operate*/
                     .scale(yScale)
-                    /*Indicates the number of ticks*/
                     .ticks(5);
   /***Brush Declaration***/
   var brush = d3.brush().on("end", brushended),
