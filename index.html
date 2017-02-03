@@ -1,5 +1,12 @@
 <html>
 <style>
+#chart {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+}
 .axis path,
 .axis line {
   fill: none;
@@ -23,16 +30,18 @@
 }
 
 </style>
-<head>
-  <meta charset="utf-8">
-  <title>NTDOY Stock Visualization</title>
-  <script type="text/javascript" src="d3/d3.js"></script>
-  <script type="text/javascript" src="ntdoycsv.js"></script>
-	<script type="text/javascript" src="ntdoyLineGraph.js"></script>
-</head>
-<body>
-  <script type="text/javascript">
-  ntdoycsv();
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>NTDOY Stock Visualization</title>
+    <script type="text/javascript" src="d3/d3.js"></script>
+    <script type="text/javascript" src="ntdoycsv.js"></script>
+  	<script type="text/javascript" src="ntdoyLineGraph.js"></script>
+  </head>
+  <body>
+    <div id="chart">
+      <script type="text/javascript">
+      ntdoycsv();
+      </script>
+    </div>
+  </body>
 </html>

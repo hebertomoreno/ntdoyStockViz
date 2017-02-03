@@ -10,7 +10,10 @@ var barPadding = 0.15;
 var makeLineGraph = function(data)
 {
   /***Draw SVG***/
-  var svg = d3.select("body")
+  var chartDiv = document.getElementById("chart");
+  w = chartDiv.clientWidth - margin.left - margin.right;
+  h = chartDiv.clientHeight - margin.top - margin.bottom;
+  var svg = d3.select(chartDiv)
               .append("svg")
               .attr("width",w + margin.left + margin.right)
               .attr("height",h + margin.top + margin.bottom)
