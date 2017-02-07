@@ -1,38 +1,17 @@
 <html>
-<style>
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.xaxis path {
-  display: none;
-}
-
-.openLine {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-.lowLine {
-  fill: none;
-  stroke: rgba(255,0,0,0.3);
-  stroke-width: 1.5px;
-}
-
-</style>
-<head>
-  <meta charset="utf-8">
-  <title>NTDOY Stock Visualization</title>
-  <script type="text/javascript" src="d3/d3.js"></script>
-  <script type="text/javascript" src="ntdoycsv.js"></script>
-	<script type="text/javascript" src="ntdoyLineGraph.js"></script>
-</head>
-<body>
-  <script type="text/javascript">
-  ntdoycsv();
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>NTDOY Stock Visualization</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="d3/d3.js"></script>
+    <script type="text/javascript" src="ntdoycsv.js"></script>
+  	<script type="text/javascript" src="ntdoyLineGraph.js"></script>
+  </head>
+  <body>
+    <div id="chart">
+      <script type="text/javascript">
+      ntdoycsv();
+      </script>
+    </div>
+  </body>
 </html>

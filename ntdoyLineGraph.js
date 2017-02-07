@@ -9,8 +9,12 @@ var barPadding = 0.15;
 
 var makeLineGraph = function(data)
 {
-  /***Draw SVG***/
-  var svg = d3.select("body")
+  /**Calculate The Size of the Screen**/
+  var chartDiv = document.getElementById("chart");
+  w = chartDiv.clientWidth - margin.left - margin.right;
+  h = chartDiv.clientHeight - margin.top - margin.bottom;
+  /**Draw SVG**/
+  var svg = d3.select(chartDiv)
               .append("svg")
               .attr("width",w + margin.left + margin.right)
               .attr("height",h + margin.top + margin.bottom)
@@ -106,7 +110,7 @@ var makeLineGraph = function(data)
       .attr("fill", function(d)
                     {
                       //console.log("rgb(0,255,0," + cScale(d.Volume) +")");
-                      return "rgba(0,255,0," + cScale(d.Volume) + ")";
+                      return "rgba(0,255,255," + cScale(d.Volume) + ")";
                       //return cScale(d.Volume);
                     });
   /***Draw Axes***/
@@ -139,10 +143,4 @@ var makeLineGraph = function(data)
       .attr("class", "lowLine")
       .attr("d", lowLine);
 
-}
-
-function getMinDate(data){
-  /***Function to get the min Date so that we can return a
-  dynamic domain to the scale.
-  (In Progress)***/
 }
