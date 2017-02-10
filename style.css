@@ -1,3 +1,6 @@
+html * {
+  background-color: white;
+}
 #chart {
   position: fixed;
   left: 0px;
